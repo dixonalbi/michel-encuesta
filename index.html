@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuesta Michel Tours - Resultados</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* Instagram Story Container */
+  .ig-container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Header Section */
+  .header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(255, 107, 53, 0.15), transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(131, 58, 180, 0.15), transparent 50%);
+    animation: rotateGradient 15s linear infinite;
+  }
+
+  @keyframes rotateGradient {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .logo-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    padding: 3px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    animation: pulseGlow 2s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(131, 58, 180, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(253, 29, 29, 0.7); }
+  }
+
+  .logo-badge .inner {
+    background: #0a0a0a;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+  }
+
+  .header h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fcb045, #fd1d1d, #833ab4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -1px;
+  }
+
+  .header .subtitle {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 8px;
+    position: relative;
+    z-index: 1;
+    font-weight: 300;
+  }
+
+  /* Score Ring */
+  .score-section {
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+  }
+
+  .score-ring-container {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+  }
+
+  .score-ring {
+    width: 200px;
+    height: 200px;
+    transform: rotate(-90deg);
+  }
+
+  .score-ring-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.08);
+    stroke-width: 8;
+  }
+
+  .score-ring-fill {
+    fill: none;
+    stroke: url(#scoreGradient);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 565;
+    stroke-dashoffset: 565;
+    transition: stroke-dashoffset 2s ease-out;
+  }
+
+  .score-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .score-value .number {
+    font-size: 4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fcb045, #fd1d1d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .score-value .total {
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+  }
+
+  .score-label {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fcb045;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  .score-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 24px;
+    background: linear-gradient(135deg, rgba(252, 176, 69, 0.2), rgba(253, 29, 29, 0.2));
+    border: 1px solid rgba(252, 176, 69, 0.3);
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fcb045;
+    letter-spacing: 1px;
+  }
+
+  /* Question Cards */
+  .questions-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .q-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .q-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .q-card:hover {
+    border-color: rgba(252, 176, 69, 0.3);
+    background: rgba(255,255,255,0.06);
+    transform: translateY(-2px);
+  }
+
+  .q-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #833ab4, #fd1d1d, #fcb045);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .q-card:hover::before { opacity: 1; }
+
+  .q-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d);
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .q-title {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .q-answer {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .q-answer .icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .q-comment {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: rgba(252, 176, 69, 0.08);
+    border-left: 3px solid #fcb045;
+    border-radius: 0 12px 12px 0;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* Progress bar for each answer */
+  .q-meter {
+    margin-top: 12px;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .q-meter-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0;
+  }
+
+  .meter-great { background: linear-gradient(90deg, #00c853, #69f0ae); }
+  .meter-good { background: linear-gradient(90deg, #fcb045, #fdd835); }
+  .meter-mid { background: linear-gradient(90deg, #ff9800, #ff5722); }
+  .meter-low { background: linear-gradient(90deg, #fd1d1d, #833ab4); }
+  .meter-chaos { background: linear-gradient(90deg, #833ab4, #e040fb); }
+
+  /* Stats Row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 20px;
+  }
+
+  .stat-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 20px 12px;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .stat-box.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .stat-box .stat-icon { font-size: 1.8rem; margin-bottom: 8px; }
+
+  .stat-box .stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fcb045, #fd1d1d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-box .stat-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Certificate */
+  .certificate {
+    margin: 40px 20px;
+    padding: 40px 30px;
+    background: linear-gradient(135deg, rgba(252, 176, 69, 0.05), rgba(131, 58, 180, 0.05));
+    border: 2px solid rgba(252, 176, 69, 0.2);
+    border-radius: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .certificate.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .certificate::before,
+  .certificate::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 2px solid rgba(252, 176, 69, 0.1);
+    border-radius: 50%;
+  }
+
+  .certificate::before { top: -20px; left: -20px; }
+  .certificate::after { bottom: -20px; right: -20px; }
+
+  .certificate .cert-title {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+  }
+
+  .certificate .cert-medal {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    animation: floatMedal 3s ease-in-out infinite;
+  }
+
+  @keyframes floatMedal {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+
+  .certificate .cert-heading {
+    font-size: 1.3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fcb045, #fd1d1d, #833ab4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  .certificate .cert-traits {
+    text-align: left;
+    max-width: 400px;
+    margin: 20px auto;
+  }
+
+  .certificate .cert-trait {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.4;
+  }
+
+  .certificate .cert-trait .check {
+    color: #fcb045;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .cert-signature {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .cert-signature .sig-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #fcb045, #fd1d1d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cert-signature .sig-role {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 4px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .cert-disclaimer {
+    margin-top: 20px;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.25);
+    font-style: italic;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 60px;
+    position: relative;
+  }
+
+  .footer .ig-handle {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+  }
+
+  .footer .watermark {
+    margin-top: 16px;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* Confetti canvas */
+  #confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Floating particles */
+  .particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(252, 176, 69, 0.3);
+    border-radius: 50%;
+    animation: floatParticle linear infinite;
+  }
+
+  @keyframes floatParticle {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) scale(1); opacity: 0; }
+  }
+
+  /* Section divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 20px;
+    margin: 20px 0;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  }
+
+  .divider span {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Screenshot button */
+  .screenshot-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 4px 20px rgba(253, 29, 29, 0.4);
+    transition: all 0.3s;
+  }
+
+  .screenshot-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(253, 29, 29, 0.6);
+  }
+
+  /* Responsive */
+  @media (min-width: 600px) {
+    .questions-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .header h1 { font-size: 3.5rem; }
+  }
+
+  /* Two-answer card */
+  .q-answer-dual {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .q-answer-dual .q-answer { font-size: 1rem; }
+
+  .dual-separator {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    padding-left: 34px;
+  }
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+<canvas id="confetti-canvas"></canvas>
+
+<div class="ig-container" id="capture">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-badge">
+      <div class="inner">&#128758;</div>
+    </div>
+    <h1>Michel Tours</h1>
+    <p class="subtitle">Encuesta Oficial de Satisfacci&oacute;n Tur&iacute;stica</p>
+  </div>
+
+  <!-- SCORE -->
+  <div class="score-section">
+    <div class="score-ring-container">
+      <svg class="score-ring" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#833ab4"/>
+            <stop offset="50%" stop-color="#fd1d1d"/>
+            <stop offset="100%" stop-color="#fcb045"/>
+          </linearGradient>
+        </defs>
+        <circle class="score-ring-bg" cx="100" cy="100" r="90"/>
+        <circle class="score-ring-fill" cx="100" cy="100" r="90" id="scoreRing"/>
+      </svg>
+      <div class="score-value">
+        <div class="number" id="scoreNumber">0</div>
+        <div class="total">/ 7</div>
+      </div>
+    </div>
+    <div class="score-label">Nota Final</div>
+    <div class="score-badge">&#10004; Aprobado con Distinci&oacute;n</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box" data-delay="0">
+      <div class="stat-icon">&#128525;</div>
+      <div class="stat-value">16</div>
+      <div class="stat-label">Preguntas</div>
+    </div>
+    <div class="stat-box" data-delay="150">
+      <div class="stat-icon">&#128175;</div>
+      <div class="stat-value">6/7</div>
+      <div class="stat-label">Nota</div>
+    </div>
+    <div class="stat-box" data-delay="300">
+      <div class="stat-icon">&#127942;</div>
+      <div class="stat-value">A+</div>
+      <div class="stat-label">Resultado</div>
+    </div>
+  </div>
+
+  <div class="divider"><span>Resultados Detallados</span></div>
+
+  <!-- QUESTIONS -->
+  <div class="questions-grid" id="questionsGrid"></div>
+
+  <div class="divider"><span>Certificado Oficial</span></div>
+
+  <!-- CERTIFICATE -->
+  <div class="certificate" id="certificate">
+    <div class="cert-title">Certificado Oficial de Supervivencia Tur&iacute;stica</div>
+    <div class="cert-medal">&#127941;</div>
+    <div class="cert-heading">
+      TURISTA SOBREVIVIENTE<br>NIVEL EXPERTO
+    </div>
+    <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 16px;">
+      Ha completado satisfactoriamente el programa intensivo de exploraci&oacute;n, gastronom&iacute;a, caminatas improvisadas y decisiones log&iacute;sticas dudosas conocido como <strong style="color: #fcb045;">"Tour Guiado por Michel Tours"</strong>
+    </p>
+    <div class="cert-traits">
+      <div class="cert-trait">
+        <span class="check">&#10003;</span>
+        <span>Valent&iacute;a al confiar en un gu&iacute;a no certificado</span>
+      </div>
+      <div class="cert-trait">
+        <span class="check">&#10003;</span>
+        <span>Resistencia ante largas caminatas y posibles desv&iacute;os de ruta</span>
+      </div>
+      <div class="cert-trait">
+        <span class="check">&#10003;</span>
+        <span>Capacidad para probar comida recomendada con excesivo entusiasmo</span>
+      </div>
+      <div class="cert-trait">
+        <span class="check">&#10003;</span>
+        <span>Paciencia ante datos hist&oacute;ricos posiblemente inventados</span>
+      </div>
+    </div>
+    <div class="cert-signature">
+      <div class="sig-name">Michel Tours</div>
+      <div class="sig-role">Gu&iacute;a Tur&iacute;stico No Certificado &bull; CEO &bull; Fundador</div>
+    </div>
+    <div class="cert-disclaimer">
+      Emitido con orgullo y probablemente sin validez legal &bull; &#11088;
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="ig-handle">@micheltours</div>
+    <div class="watermark">Michel Tours &bull; Turismo de Confianza Dudosa&trade;</div>
+  </div>
+
+</div>
+
+<script>
+// Survey data
+const questions = [
+  {
+    num: 1,
+    title: "&#191;C&oacute;mo calificar&iacute;as al gu&iacute;a tur&iacute;stico?",
+    answer: "Muy bueno, lo contratar&iacute;a de nuevo",
+    icon: "&#128526;",
+    meter: 80,
+    meterClass: "meter-good"
+  },
+  {
+    num: 2,
+    title: "Nivel de conocimiento del gu&iacute;a sobre el pa&iacute;s",
+    answer: "Experto total",
+    icon: "&#129504;",
+    meter: 100,
+    meterClass: "meter-great"
+  },
+  {
+    num: 3,
+    title: "Calidad de las recomendaciones de comida",
+    answer: "Obra maestra gastron&oacute;mica",
+    icon: "&#127860;",
+    comment: "El completo buenazo... aunque mi est&oacute;mago fue da&ntilde;ado &#128565;",
+    meter: 90,
+    meterClass: "meter-great"
+  },
+  {
+    num: 4,
+    title: "Capacidad del gu&iacute;a para no perderse",
+    answer: "Terminamos en otra comuna",
+    icon: "&#128506;",
+    comment: "Terminamos en otra direcci&oacute;n y terminal jajaj &#128514;",
+    meter: 20,
+    meterClass: "meter-chaos"
+  },
+  {
+    num: 5,
+    title: "Ambiente del tour",
+    answer: "10/10, risas garantizadas",
+    icon: "&#127881;",
+    meter: 100,
+    meterClass: "meter-great"
+  },
+  {
+    num: 6,
+    title: "Si este servicio fuera una empresa, t&uacute; dir&iacute;as que...",
+    answer: "Debe ser investigado por las autoridades",
+    icon: "&#128680;",
+    comment: "Por si acaso, la procedencia fue dudosa &#128064;",
+    meter: 15,
+    meterClass: "meter-chaos"
+  },
+  {
+    num: 7,
+    title: "Comentarios, quejas o agradecimientos",
+    answer: "",
+    icon: "&#128140;",
+    comment: "Amena compa&ntilde;&iacute;a, aunque hubo una caminata larga, pero el gu&iacute;a lo hizo amena, y con besos sorpresas jaja",
+    meter: 85,
+    meterClass: "meter-good",
+    isComment: true
+  },
+  {
+    num: 8,
+    title: "Propina sugerida para el gu&iacute;a",
+    answer: "Un monumento en su honor",
+    icon: "&#127961;",
+    comment: "Un monumento en mi ba&ntilde;o &#128173;",
+    meter: 95,
+    meterClass: "meter-great"
+  },
+  {
+    num: 9,
+    title: "&#191;Qu&eacute; tan probable es que este gu&iacute;a sobreviva en una agencia real?",
+    answer: "No pasa la entrevista",
+    icon: "&#128128;",
+    meter: 10,
+    meterClass: "meter-chaos"
+  },
+  {
+    num: 10,
+    title: "Capacidad del gu&iacute;a para elegir buenos lugares para fotos",
+    answer: "Muy buenas fotos &mdash; cumple",
+    icon: "&#128248;",
+    meter: 70,
+    meterClass: "meter-good"
+  },
+  {
+    num: 11,
+    title: "Nivel de paciencia del gu&iacute;a ante preguntas del turista",
+    answer: "Muy paciente &mdash; s&uacute;per paciente",
+    icon: "&#129495;",
+    meter: 80,
+    meterClass: "meter-good"
+  },
+  {
+    num: 12,
+    title: '&#191;Cu&aacute;ntas veces el gu&iacute;a dijo "conf&iacute;a en m&iacute;"?',
+    answer: "Ahora entiendo por qu&eacute;",
+    icon: "&#128561;",
+    comment: "Mi error fue confiar &#128517;",
+    meter: 15,
+    meterClass: "meter-chaos"
+  },
+  {
+    num: 13,
+    title: "Evaluaci&oacute;n del humor del gu&iacute;a",
+    answer: "10/10, comediante internacional",
+    icon: "&#127908;",
+    comment: "Deber&iacute;a hacer stand up &#127911;",
+    meter: 100,
+    meterClass: "meter-great"
+  },
+  {
+    num: 14,
+    title: "Si este tour fuera una pel&iacute;cula, ser&iacute;a...",
+    answer: "Un cap&iacute;tulo perdido de supervivencia",
+    icon: "&#127916;",
+    comment: "Un arco de anime de d&iacute;a en la playa &#127754;",
+    meter: 60,
+    meterClass: "meter-mid"
+  },
+  {
+    num: 15,
+    title: "&#191;El gu&iacute;a exager&oacute; datos hist&oacute;ricos o culturales?",
+    answer: "Tal vez un poco",
+    icon: "&#129300;",
+    comment: "Espero... &#128580;",
+    meter: 65,
+    meterClass: "meter-mid"
+  },
+  {
+    num: 16,
+    title: "Despu&eacute;s de esta experiencia, el turista...",
+    answer: "La recordar&aacute; con cari&ntilde;o",
+    icon: "&#128151;",
+    comment: "Y tambi&eacute;n pedir&aacute; compensaci&oacute;n emocional &#128557;",
+    meter: 75,
+    meterClass: "meter-good",
+    dual: true
+  }
+];
+
+// Render questions
+const grid = document.getElementById('questionsGrid');
+questions.forEach((q, idx) => {
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.style.transitionDelay = `${idx * 80}ms`;
+
+  let answerHTML = '';
+  if (q.isComment) {
+    answerHTML = '';
+  } else {
+    answerHTML = `<div class="q-answer"><span class="icon">${q.icon}</span> ${q.answer}</div>`;
+  }
+
+  let commentHTML = '';
+  if (q.comment) {
+    commentHTML = `<div class="q-comment">"${q.comment}"</div>`;
+  }
+
+  card.innerHTML = `
+    <div class="q-number">${q.num}</div>
+    <div class="q-title">${q.title}</div>
+    ${answerHTML}
+    ${commentHTML}
+    <div class="q-meter">
+      <div class="q-meter-fill ${q.meterClass}" data-width="${q.meter}"></div>
+    </div>
+  `;
+
+  grid.appendChild(card);
+});
+
+// Animate score
+function animateScore() {
+  const target = 6;
+  const duration = 2000;
+  const start = performance.now();
+  const numberEl = document.getElementById('scoreNumber');
+  const ringEl = document.getElementById('scoreRing');
+  const circumference = 2 * Math.PI * 90;
+  const targetOffset = circumference - (target / 7) * circumference;
+
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+
+    const current = eased * target;
+    numberEl.textContent = current.toFixed(1);
+    ringEl.style.strokeDashoffset = circumference - eased * (circumference - targetOffset);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      numberEl.textContent = target;
+    }
+  }
+  requestAnimationFrame(update);
+}
+
+// Intersection observer for cards
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Animate meter fills
+      const meter = entry.target.querySelector('.q-meter-fill');
+      if (meter) {
+        setTimeout(() => {
+          meter.style.width = meter.dataset.width + '%';
+        }, 300);
+      }
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.q-card, .stat-box, .certificate').forEach(el => {
+  observer.observe(el);
+});
+
+// Floating particles
+const particlesContainer = document.getElementById('particles');
+for (let i = 0; i < 20; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (8 + Math.random() * 12) + 's';
+  p.style.animationDelay = Math.random() * 10 + 's';
+  p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+  const colors = ['rgba(252,176,69,0.3)', 'rgba(253,29,29,0.2)', 'rgba(131,58,180,0.2)'];
+  p.style.background = colors[Math.floor(Math.random() * colors.length)];
+  particlesContainer.appendChild(p);
+}
+
+// Confetti burst on load
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const pieces = [];
+  const colors = ['#833ab4', '#fd1d1d', '#fcb045', '#fdd835', '#00c853', '#e040fb'];
+
+  for (let i = 0; i < 100; i++) {
+    pieces.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 16,
+      vy: (Math.random() - 0.5) * 16 - 5,
+      w: 6 + Math.random() * 6,
+      h: 4 + Math.random() * 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 10,
+      gravity: 0.15,
+      opacity: 1
+    });
+  }
+
+  let frame = 0;
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+
+    pieces.forEach(p => {
+      p.x += p.vx;
+      p.vy += p.gravity;
+      p.y += p.vy;
+      p.rotation += p.rotSpeed;
+      p.opacity -= 0.005;
+
+      if (p.opacity > 0) {
+        alive = true;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation * Math.PI / 180);
+        ctx.globalAlpha = p.opacity;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      }
+    });
+
+    frame++;
+    if (alive && frame < 300) {
+      requestAnimationFrame(animate);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  animate();
+}
+
+// Init
+window.addEventListener('load', () => {
+  setTimeout(animateScore, 500);
+  setTimeout(launchConfetti, 800);
+});
+</script>
+
+</body>
+</html>
